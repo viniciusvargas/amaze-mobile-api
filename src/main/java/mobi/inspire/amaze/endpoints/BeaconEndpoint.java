@@ -53,11 +53,19 @@ public class BeaconEndpoint extends BaseEndpoint {
 		Beacon beacon = new Beacon(uuid, major, minor);
 		List<Beacon> listBeacon = beaconService.findByFilter(beacon); 
 
-		if (listBeacon == null) {
+		if (listBeacon == null || listBeacon.size() == 0) {
 			jsonResponse.put("systemMessage", EndpointConstants.BEACON_NOT_FOUND);
 			return Response.ok(jsonResponse.toString(), MediaType.APPLICATION_JSON).build();
-		} else {
-			beacon = listBeacon.get(0);            
+		}
+		
+		beacon = listBeacon.get(0);
+		
+		//check if beacon have any details linked to it
+		if (beacon.getBeaconDetails() != null) {
+			JSONObject beaconDetailsJsonObject = new JSONObject();
+			beaconDetailsJsonObject.put("text", beacon.getBeaconDetails().getText());
+			beaconDetailsJsonObject.put("imageUrl", beacon.getBeaconDetails().getImageUrl());
+			jsonResponse.put("beaconDetails", beaconDetailsJsonObject);
 		}
 
 		return Response.ok(jsonResponse.toString(), MediaType.APPLICATION_JSON).build();
