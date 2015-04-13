@@ -9,6 +9,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>amaze-mobile-api</name>
 
+	<repositories>
+		<repository>
+			<id>snapshots</id>
+			<url>http://nexus-vinacrf.rhcloud.com/nexus/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<finalName>amaze-mobile-api</finalName>
 		<plugins>
